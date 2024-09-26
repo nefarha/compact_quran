@@ -30,7 +30,7 @@ ThemeData compactTextTheme() {
   return ThemeData(
     useMaterial3: false,
     scaffoldBackgroundColor: ColorPallete.quran_teal,
-    textTheme: GoogleFonts.poppinsTextTheme(),
+    textTheme: GoogleFonts.kanitTextTheme(),
     colorScheme: ColorScheme.fromSeed(seedColor: ColorPallete.quran_teal),
   );
 }
