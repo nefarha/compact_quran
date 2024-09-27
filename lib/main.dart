@@ -30,7 +30,7 @@ ThemeData compactTextTheme() {
   return ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
-    textTheme: GoogleFonts.ubuntuTextTheme(),
+    textTheme: GoogleFonts.poppinsTextTheme(),
     colorScheme: ColorScheme.fromSeed(
       seedColor: Colors.white,
       surfaceTint: Colors.transparent,

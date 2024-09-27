@@ -2,6 +2,7 @@ import 'package:compact_quran/app/data/core/enums/e_section_option.dart';
 import 'package:compact_quran/app/data/core/styles/text_styles.dart';
 import 'package:compact_quran/app/data/core/utils/asset_url.dart';
 import 'package:compact_quran/app/data/core/utils/color_pallete.dart';
+import 'package:compact_quran/app/modules/home/views/home_juz_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -51,7 +52,10 @@ class HomeView extends GetView<HomeController> {
           ),
           _HomeHeader(),
           _HomeSectionFilter(),
-          _HomeBody(),
+          SizedBox(
+            height: 20,
+          ),
+          HomeJuzView(),
         ],
       ),
     );
@@ -152,7 +156,7 @@ class _HomeSectionFilter extends GetView<HomeController> {
           children: ESectionOption.values
               .map(
                 (e) => Flexible(
-                  flex: controller.sameSection(e) ? 4 : 1,
+                  flex: controller.sameSection(e) ? 2 : 1,
                   child: GestureDetector(
                     onTap: () {
                       controller.changeSection(e);
