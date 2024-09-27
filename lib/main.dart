@@ -28,9 +28,13 @@ class CompactQuran extends StatelessWidget {
 
 ThemeData compactTextTheme() {
   return ThemeData(
-    useMaterial3: false,
-    scaffoldBackgroundColor: ColorPallete.quran_teal,
-    textTheme: GoogleFonts.kanitTextTheme(),
-    colorScheme: ColorScheme.fromSeed(seedColor: ColorPallete.quran_teal),
+    useMaterial3: true,
+    scaffoldBackgroundColor: Colors.white,
+    textTheme: GoogleFonts.ubuntuTextTheme(),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: Colors.white,
+      surfaceTint: Colors.transparent,
+      surface: Colors.transparent,
+    ),
   );
 }

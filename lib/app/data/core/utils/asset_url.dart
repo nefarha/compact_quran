@@ -1,5 +1,6 @@
 class AssetUrl {
   static String _baseUrl = 'assets';
 
-  static String bf = '$_baseUrl/bg.jpg';
+  static String bg = '$_baseUrl/bg.jpg';
+  static String mosque = '$_baseUrl/mosque.png';
 }
