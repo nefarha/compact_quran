@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-class HomeJuzView extends GetView<HomeController> {
-  const HomeJuzView({Key? key}) : super(key: key);
+class HomeSurahCard extends GetView<HomeController> {
+  const HomeSurahCard({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Expanded(

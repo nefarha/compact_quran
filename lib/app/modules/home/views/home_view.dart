@@ -51,11 +51,7 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           _HomeHeader(),
-          _HomeSectionFilter(),
-          SizedBox(
-            height: 20,
-          ),
-          HomeJuzView(),
+          HomeSurahCard(),
         ],
       ),
     );
