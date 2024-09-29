@@ -1,10 +1,17 @@
 import 'dart:math';
 
 import 'package:compact_quran/app/data/core/enums/e_section_option.dart';
+import 'package:compact_quran/app/data/core/network_failures/network_failures.dart';
+import 'package:compact_quran/app/data/core/utils/custom_flushbar.dart';
+import 'package:compact_quran/app/data/model/surah_list/surah_list.dart';
+import 'package:compact_quran/app/data/repository/quran_repository.dart';
+import 'package:flutter/foundation.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   final selectedType = Rx(ESectionOption.juz);
+  final _quranRepository = QuranRepository();
 
   List<String> welcomeMessages = [
     "Semoga bacaanmu hari ini membawa ketenangan jiwa.",
@@ -160,6 +167,9 @@ class HomeController extends GetxController {
     "Lanjutkan bacaan, semoga setiap huruf membawa pahala."
   ];
 
+  final optionOrSurahList =
+      Rx<Option<Either<NetworkFailures, List<SurahModel>>>>(none());
+
   // Function to generate random message
   String getRandomMessage() {
     final random = Random();
@@ -173,5 +183,27 @@ class HomeController extends GetxController {
 
   bool sameSection(ESectionOption value) {
     return selectedType.value == value;
+  }
+
+  Future getSurahList() async {
+    final result = await _quranRepository.getSurahs();
+
+    result.match(
+      (l) => CustomFlushbar(
+        message: l.when(
+          serverError: (message) => message,
+          noInternet: (message) => message,
+        ),
+      ).show(),
+      (r) => null,
+    );
+
+    optionOrSurahList.value = optionOf(result);
+  }
+
+  @override
+  void onInit() {
+    getSurahList();
+    super.onInit();
   }
 }

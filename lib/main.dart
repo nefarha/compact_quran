@@ -1,3 +1,4 @@
+import 'package:compact_quran/app/data/core/network_service/network_service.dart';
 import 'package:compact_quran/app/data/core/utils/color_pallete.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class CompactQuran extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(NetworkService());
     return GetMaterialApp(
       title: "Compact Quran",
       initialRoute: AppPages.INITIAL,
