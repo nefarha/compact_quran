@@ -35,4 +35,30 @@ class QuranRepository implements IQuranRepository {
       },
     );
   }
+
+  @override
+  Future<Either<NetworkFailures, SurahModel>> getSurat({
+    required int nomorSurat,
+  }) async {
+    final result = await _networkService.getHttp(
+        url: Urls.surahDetail(nomorSurat: nomorSurat));
+
+    return result.match(
+      (l) => left(
+        l.when(
+          serverError: (message) => NetworkFailures.serverError(message),
+          noInternet: (message) => NetworkFailures.noInternet(message),
+        ),
+      ),
+      (r) {
+        try {
+          final surah = SurahModel.fromJson(r.data as Map<String, dynamic>);
+
+          return right(surah);
+        } catch (e) {
+          return left(NetworkFailures.serverError(e.toString()));
+        }
+      },
+    );
+  }
 }

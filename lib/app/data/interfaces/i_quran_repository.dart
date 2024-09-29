@@ -4,4 +4,7 @@ import 'package:fpdart/fpdart.dart';
 
 abstract class IQuranRepository {
   Future<Either<NetworkFailures, List<SurahModel>>> getSurahs();
+  Future<Either<NetworkFailures, SurahModel>> getSurat({
+    required int nomorSurat,
+  });
 }

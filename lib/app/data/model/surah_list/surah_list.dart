@@ -12,8 +12,23 @@ class SurahModel with _$SurahModel {
     required int jumlahAyat,
     required String tempatTurun,
     required String arti,
+    List<AyatModel>? ayat,
   }) = _SurahModel;
 
   factory SurahModel.fromJson(Map<String, dynamic> json) =>
       _$SurahModelFromJson(json);
+}
+
+@freezed
+class AyatModel with _$AyatModel {
+  const factory AyatModel({
+    required int nomorAyat,
+    required String teksArab,
+    required String teksLatin,
+    required String teksIndonesia,
+    required Map<String, String> audio,
+  }) = _AyatModel;
+
+  factory AyatModel.fromJson(Map<String, dynamic> json) =>
+      _$AyatModelFromJson(json);
 }

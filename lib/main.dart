@@ -32,7 +32,7 @@ ThemeData compactTextTheme() {
   return ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
-    textTheme: GoogleFonts.poppinsTextTheme(),
+    textTheme: GoogleFonts.notoSansTextTheme(),
     colorScheme: ColorScheme.fromSeed(
       seedColor: Colors.white,
       surfaceTint: Colors.transparent,
