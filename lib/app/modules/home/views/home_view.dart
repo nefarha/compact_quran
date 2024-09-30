@@ -101,37 +101,40 @@ class _HomeHeader extends GetView<HomeController> {
           ),
           Padding(
             padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Terakhir dibaca',
-                  style: TextStyles.titleStyle.copyWith(
-                    color: Colors.white,
-                    fontSize: 14,
+            child: Obx(
+              () => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Terakhir dibaca',
+                    style: TextStyles.titleStyle.copyWith(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Al - Fatihaa',
-                  style: TextStyles.headerStyle.copyWith(
-                    color: ColorPallete.QuranRed,
-                    fontSize: 22,
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Ayah 1',
-                  style: TextStyles.bodyStyle.copyWith(
-                    color: Colors.white,
+                  Text(
+                    controller.lastSurahName.value ??
+                        'Belum ada surat yang tandai',
+                    style: TextStyles.headerStyle.copyWith(
+                      color: ColorPallete.QuranRed,
+                      fontSize: 22,
+                    ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Ayah 1',
+                    style: TextStyles.bodyStyle.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -189,95 +192,6 @@ class _HomeSectionFilter extends GetView<HomeController> {
                 ),
               )
               .toList(),
-        ),
-      ),
-    );
-  }
-}
-
-class _HomeBody extends GetView<HomeController> {
-  const _HomeBody({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          HomeMenuButton(
-            title: 'Baca Quran',
-            description: 'Baca seluruh quran dalam 1 halaman',
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          HomeMenuButton(
-            title: 'Baca Juz',
-            description: 'Baca quran dari juz',
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          HomeMenuButton(
-            title: 'Baca Surah',
-            description: 'Baca quran dari surah',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class HomeMenuButton extends StatelessWidget {
-  const HomeMenuButton({
-    super.key,
-    this.onTap,
-    required this.description,
-    required this.title,
-  });
-
-  final void Function()? onTap;
-  final String title;
-  final String description;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5),
-        width: double.infinity,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: ColorPallete.quran_teal,
-            width: 1.5,
-          ),
-          borderRadius: BorderRadius.circular(
-            25,
-          ),
-        ),
-        child: Center(
-          child: Column(
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  color: ColorPallete.quran_teal,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                ),
-              ),
-              Text(
-                description,
-                style: TextStyle(
-                  color: ColorPallete.quran_teal,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

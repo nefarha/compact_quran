@@ -8,10 +8,12 @@ import 'package:compact_quran/app/data/repository/quran_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
   final selectedType = Rx(ESectionOption.juz);
   final _quranRepository = QuranRepository();
+  final _box = GetStorage();
 
   List<String> welcomeMessages = [
     "Semoga bacaanmu hari ini membawa ketenangan jiwa.",
@@ -166,6 +168,15 @@ class HomeController extends GetxController {
     "Setiap ayat adalah doa, semoga membawa kebaikan.",
     "Lanjutkan bacaan, semoga setiap huruf membawa pahala."
   ];
+  RxnString lastSurahName = RxnString();
+  getLastSurat() {
+    var last = _box.read('last_read');
+    if (last == null) {
+      lastSurahName.value = null;
+    }
+
+    lastSurahName.value = last["name"];
+  }
 
   final optionOrSurahList =
       Rx<Option<Either<NetworkFailures, List<SurahModel>>>>(none());
@@ -203,6 +214,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    getLastSurat();
     getSurahList();
     super.onInit();
   }

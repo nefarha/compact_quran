@@ -181,57 +181,64 @@ class _SurahBody extends GetView<SuratController> {
               itemCount: r.ayat!.length,
               itemBuilder: (context, index) {
                 AyatModel model = r.ayat![index];
-                return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: ColorPallete.QuranBlue,
-                            radius: 10,
-                            child: Text(
-                              model.nomorAyat.toString(),
-                              style: TextStyles.titleStyle
-                                  .copyWith(fontSize: 10, color: Colors.white),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Flexible(
-                            child: Text(
-                              model.teksArab,
-                              textAlign: TextAlign.right,
-                              style: TextStyles.headerStyle.copyWith(
-                                fontSize: 22,
+                return GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    debugPrint('assda Called outside');
+                    controller.addLastSurat(nomorAyat: model.nomorAyat);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: ColorPallete.QuranBlue,
+                              radius: 10,
+                              child: Text(
+                                model.nomorAyat.toString(),
+                                style: TextStyles.titleStyle.copyWith(
+                                    fontSize: 10, color: Colors.white),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          model.teksLatin,
-                          style: TextStyles.headerStyle.copyWith(
-                            color: ColorPallete.QuranBlue,
-                            fontSize: 14,
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Flexible(
+                              child: Text(
+                                model.teksArab,
+                                textAlign: TextAlign.right,
+                                style: TextStyles.headerStyle.copyWith(
+                                  fontSize: 22,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            model.teksLatin,
+                            style: TextStyles.headerStyle.copyWith(
+                              color: ColorPallete.QuranBlue,
+                              fontSize: 14,
+                            ),
                           ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          model.teksIndonesia,
-                          style: TextStyles.bodyStyle.copyWith(),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            model.teksIndonesia,
+                            style: TextStyles.bodyStyle.copyWith(),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },

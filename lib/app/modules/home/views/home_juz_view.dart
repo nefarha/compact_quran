@@ -61,6 +61,10 @@ class HomeSurahCard extends GetView<HomeController> {
                               "selected_surat": model,
                               "surat_list": r
                             },
+                          )?.then(
+                            (value) {
+                              controller.getLastSurat();
+                            },
                           );
                         },
                         child: Container(

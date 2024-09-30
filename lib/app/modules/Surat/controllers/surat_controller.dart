@@ -5,10 +5,12 @@ import 'package:compact_quran/app/data/repository/quran_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class SuratController extends GetxController {
   final _quranRepository = QuranRepository();
+  final _box = GetStorage();
   List<SurahModel> surahs = Get.arguments['surat_list'];
 
   final selectedSurah = Rx<SurahModel>(Get.arguments['selected_surat']);
@@ -16,6 +18,18 @@ class SuratController extends GetxController {
   final scrollController = ItemScrollController();
 
   final optionOrSurah = Rx<Option<Either<NetworkFailures, SurahModel>>>(none());
+
+  addLastSurat({required int nomorAyat}) async {
+    await _box.write(
+      'last_read',
+      {
+        "name": selectedSurah.value.namaLatin,
+        "nomor_surat": selectedSurah.value.nomor,
+        "nomor_ayat": nomorAyat
+      },
+    );
+    debugPrint('assda Called inside');
+  }
 
   bool sameSurah({required SurahModel surah}) {
     return selectedSurah.value.nomor == surah.nomor;
