@@ -168,18 +168,34 @@ class HomeController extends GetxController {
     "Setiap ayat adalah doa, semoga membawa kebaikan.",
     "Lanjutkan bacaan, semoga setiap huruf membawa pahala."
   ];
+
   RxnString lastSurahName = RxnString();
+  RxnInt lastSurahayat = RxnInt();
+
   getLastSurat() {
     var last = _box.read('last_read');
     if (last == null) {
       lastSurahName.value = null;
+      lastSurahayat.value = null;
+      return;
     }
 
     lastSurahName.value = last["name"];
+    lastSurahayat.value = last["nomor_ayat"];
+  }
+
+  listenLastSurat() {
+    _box.listenKey('last_read', (value) {
+      lastSurahName.value = value['name'];
+      lastSurahayat.value = value['nomor_ayat'];
+      debugPrint('assda $value');
+    });
   }
 
   final optionOrSurahList =
       Rx<Option<Either<NetworkFailures, List<SurahModel>>>>(none());
+
+  final surahList = RxList<SurahModel>.empty();
 
   // Function to generate random message
   String getRandomMessage() {
@@ -206,7 +222,7 @@ class HomeController extends GetxController {
           noInternet: (message) => message,
         ),
       ).show(),
-      (r) => null,
+      (r) => surahList.value = r,
     );
 
     optionOrSurahList.value = optionOf(result);
@@ -214,6 +230,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    listenLastSurat();
     getLastSurat();
     getSurahList();
     super.onInit();

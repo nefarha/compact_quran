@@ -2,12 +2,15 @@ import 'package:compact_quran/app/data/core/enums/e_section_option.dart';
 import 'package:compact_quran/app/data/core/styles/text_styles.dart';
 import 'package:compact_quran/app/data/core/utils/asset_url.dart';
 import 'package:compact_quran/app/data/core/utils/color_pallete.dart';
+import 'package:compact_quran/app/data/model/surah_list/surah_list.dart';
 import 'package:compact_quran/app/modules/home/views/home_juz_view.dart';
+import 'package:compact_quran/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -63,135 +66,97 @@ class _HomeHeader extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 150,
-      margin: EdgeInsets.all(20),
-      width: double.infinity,
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Stack(
-        children: [
-          Align(
-            child: Container(
+    return GestureDetector(
+      onTap: () {
+        if (GetStorage().read('last_read') != null) {
+          Get.toNamed(
+            Routes.SURAT,
+            arguments: {
+              "selected_surat":
+                  GetStorage().read('last_read')['surat'] is SurahModel
+                      ? GetStorage().read('last_read')['surat']
+                      : SurahModel.fromJson(
+                          GetStorage().read('last_read')['surat']),
+              "surat_list": controller.surahList
+            },
+          );
+        }
+      },
+      child: Container(
+        height: 150,
+        margin: EdgeInsets.all(20),
+        width: double.infinity,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Stack(
+          children: [
+            Align(
+              child: Container(
+                decoration: BoxDecoration(
+                  // color: ColorPallete.QuranPurple,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(
+                      AssetUrl.mosque,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
               decoration: BoxDecoration(
-                // color: ColorPallete.QuranPurple,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(
-                    AssetUrl.mosque,
-                  ),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    ColorPallete.QuranPurple.withOpacity(0.7),
+                    ColorPallete.QuranRed.withOpacity(0.9),
+                  ],
                 ),
               ),
             ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  ColorPallete.QuranPurple.withOpacity(0.7),
-                  ColorPallete.QuranRed.withOpacity(0.9),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(20),
-            child: Obx(
-              () => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Terakhir dibaca',
-                    style: TextStyles.titleStyle.copyWith(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    controller.lastSurahName.value ??
-                        'Belum ada surat yang tandai',
-                    style: TextStyles.headerStyle.copyWith(
-                      color: ColorPallete.QuranRed,
-                      fontSize: 22,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    'Ayah 1',
-                    style: TextStyles.bodyStyle.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HomeSectionFilter extends GetView<HomeController> {
-  const _HomeSectionFilter({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(
-      () => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Row(
-          children: ESectionOption.values
-              .map(
-                (e) => Flexible(
-                  flex: controller.sameSection(e) ? 2 : 1,
-                  child: GestureDetector(
-                    onTap: () {
-                      controller.changeSection(e);
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 500),
-                      height: 50,
-                      padding: EdgeInsets.all(10),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: controller.sameSection(e)
-                                ? ColorPallete.QuranRed
-                                : Colors.grey.shade300,
-                            width: controller.sameSection(e) ? 5 : 2,
-                          ),
-                        ),
-                      ),
-                      child: Center(
-                        child: Text(
-                          e.name,
-                          style: controller.sameSection(e)
-                              ? TextStyles.headerStyle.copyWith(
-                                  color: ColorPallete.QuranRed,
-                                )
-                              : TextStyles.bodyStyle.copyWith(
-                                  color: Colors.grey,
-                                ),
-                        ),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Obx(
+                () => Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Terakhir dibaca',
+                      style: TextStyles.titleStyle.copyWith(
+                        color: Colors.white,
+                        fontSize: 14,
                       ),
                     ),
-                  ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      controller.lastSurahName.value ??
+                          'Belum ada surat yang tandai',
+                      style: TextStyles.headerStyle.copyWith(
+                        color: ColorPallete.QuranRed,
+                        fontSize: 22,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Ayat ${controller.lastSurahayat.value ?? '-'}',
+                      style: TextStyles.bodyStyle.copyWith(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-              )
-              .toList(),
+              ),
+            ),
+          ],
         ),
       ),
     );
