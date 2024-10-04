@@ -20,6 +20,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: _DrawerHome(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -220,6 +221,93 @@ class _HomeHeader extends GetView<HomeController> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _DrawerHome extends StatelessWidget {
+  const _DrawerHome({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.white,
+      child: Column(
+        children: [
+          DrawerHeader(
+            child: Container(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Compact Quran',
+                    style: TextStyles.headerStyle,
+                  ),
+                  Text(
+                    'by islami anonymous',
+                    style: TextStyles.bodyStyle,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text('Thanks to EQuran.id'),
+          Text('for providing the data'),
+          SizedBox(
+            height: 20,
+          ),
+          Text('Developed by islami anonymous'),
+          Text('with love and support'),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Copyright © 2024 islami anonymous',
+            style: TextStyles.bodyStyle,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            'All Rights Reserved',
+            style: TextStyles.bodyStyle,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              'if you want to contribute or add something, click button below to redirect to github',
+              textAlign: TextAlign.center,
+              style: TextStyles.bodyStyle,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(199, 0, 0, 0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onPressed: () {
+              // Get.toNamed(AppRoutes.gh);
+            },
+            child: Text(
+              'Github',
+              style: TextStyles.bodyStyle.copyWith(color: Colors.white),
+            ),
+          ),
+        ],
       ),
     );
   }
