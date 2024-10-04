@@ -5,6 +5,7 @@ import 'package:compact_quran/app/data/core/network_failures/network_failures.da
 import 'package:compact_quran/app/data/core/utils/custom_flushbar.dart';
 import 'package:compact_quran/app/data/model/surah_list/surah_list.dart';
 import 'package:compact_quran/app/data/repository/quran_repository.dart';
+import 'package:compact_quran/app/routes/app_pages.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:get/get.dart';
@@ -172,6 +173,8 @@ class HomeController extends GetxController {
   RxnString lastSurahName = RxnString();
   RxnInt lastSurahayat = RxnInt();
 
+  final isFlashReadLoading = false.obs;
+
   getLastSurat() {
     var last = _box.read('last_read');
     if (last == null) {
@@ -226,6 +229,42 @@ class HomeController extends GetxController {
     );
 
     optionOrSurahList.value = optionOf(result);
+  }
+
+  Future getRandomRead() async {
+    isFlashReadLoading.value = true;
+    var selectedNumber = Random().nextInt(114);
+    if (selectedNumber == 0) {
+      selectedNumber = 1;
+    }
+    if (selectedNumber > 114) {
+      selectedNumber = 114;
+    }
+    var surahResult =
+        await _quranRepository.getSurat(nomorSurat: selectedNumber);
+
+    surahResult.match(
+      (l) => CustomFlushbar(
+        message: l.when(
+          serverError: (message) => message,
+          noInternet: (message) => message,
+        ),
+      ).show(),
+      (r) {
+        var selectedAyat = Random().nextInt(r.ayat!.length);
+        if (selectedAyat == 0) {
+          selectedAyat = 1;
+        }
+        if (selectedAyat > r.ayat!.length) {
+          selectedAyat = r.ayat!.length;
+        }
+
+        var ayat = r.ayat![selectedAyat - 1];
+
+        Get.toNamed(Routes.FLASH_READ, arguments: ayat);
+      },
+    );
+    isFlashReadLoading.value = false;
   }
 
   @override

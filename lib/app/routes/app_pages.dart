@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/FlashRead/bindings/flash_read_binding.dart';
+import '../modules/FlashRead/views/flash_read_view.dart';
 import '../modules/Surat/bindings/surat_binding.dart';
 import '../modules/Surat/views/surat_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -22,6 +24,11 @@ class AppPages {
       name: _Paths.SURAT,
       page: () => const SuratView(),
       binding: SuratBinding(),
+    ),
+    GetPage(
+      name: _Paths.FLASH_READ,
+      page: () => const FlashReadView(),
+      binding: FlashReadBinding(),
     ),
   ];
 }

@@ -11,6 +11,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:glass/glass.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -121,35 +122,96 @@ class _HomeHeader extends GetView<HomeController> {
             Padding(
               padding: EdgeInsets.all(20),
               child: Obx(
-                () => Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      'Terakhir dibaca',
-                      style: TextStyles.titleStyle.copyWith(
-                        color: Colors.white,
-                        fontSize: 14,
+                    Flexible(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Terakhir dibaca',
+                            style: TextStyles.titleStyle.copyWith(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Flexible(
+                            child: Text(
+                              controller.lastSurahName.value ??
+                                  'Belum ada surat yang tandai',
+                              style: TextStyles.headerStyle.copyWith(
+                                color: ColorPallete.QuranRed,
+                                fontSize: 22,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Ayat ${controller.lastSurahayat.value ?? '-'}',
+                            style: TextStyles.bodyStyle.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      controller.lastSurahName.value ??
-                          'Belum ada surat yang tandai',
-                      style: TextStyles.headerStyle.copyWith(
-                        color: ColorPallete.QuranRed,
-                        fontSize: 22,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Ayat ${controller.lastSurahayat.value ?? '-'}',
-                      style: TextStyles.bodyStyle.copyWith(
-                        color: Colors.white,
+                    GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        if (!controller.isFlashReadLoading.value) {
+                          controller.getRandomRead();
+                        }
+                      },
+                      child: Container(
+                        height: 70,
+                        width: 100,
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: ColorPallete.QuranPurple.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Obx(
+                          () => controller.isFlashReadLoading.value
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ))
+                              : Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.question_mark,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      'Quick Read',
+                                      style: TextStyles.bodyStyle
+                                          .copyWith(color: Colors.white),
+                                    )
+                                  ],
+                                ),
+                        ),
+                      ).asGlass(
+                        blurX: 3,
+                        blurY: 3,
+                        tintColor: ColorPallete.quran_teal,
+                        frosted: true,
+                        tileMode: TileMode.decal,
+                        clipBehaviour: Clip.antiAlias,
+                        clipBorderRadius: BorderRadius.circular(15),
                       ),
                     ),
                   ],

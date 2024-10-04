@@ -23,6 +23,7 @@ class CompactQuran extends StatelessWidget {
     Get.put(NetworkService());
     return GetMaterialApp(
       title: "Compact Quran",
+      debugShowCheckedModeBanner: false,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       theme: compactTextTheme(),

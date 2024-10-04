@@ -5,10 +5,12 @@ abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
   static const SURAT = _Paths.SURAT;
+  static const FLASH_READ = _Paths.FLASH_READ;
 }
 
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
   static const SURAT = '/surat';
+  static const FLASH_READ = '/flash-read';
 }

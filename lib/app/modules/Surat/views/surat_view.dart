@@ -17,7 +17,17 @@ class SuratView extends GetView<SuratController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Surat'),
+        leading: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () => Get.back(),
+          child: Icon(
+            Icons.arrow_back_ios_new,
+          ),
+        ),
+        title: Text(
+          'Surat',
+          style: TextStyles.headerStyle,
+        ),
         centerTitle: true,
       ),
       body: Container(
@@ -275,14 +285,6 @@ class _SurahBody extends GetView<SuratController> {
                                       .copyWith(color: Colors.white),
                                 ),
                               ],
-                            ),
-                          ),
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 15,
-                            child: Icon(
-                              Icons.play_arrow,
-                              color: ColorPallete.QuranBlue,
                             ),
                           ),
                         ],

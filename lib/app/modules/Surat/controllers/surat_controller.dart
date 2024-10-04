@@ -56,7 +56,6 @@ class SuratController extends GetxController {
     _box.listenKey('last_read', (value) {
       nomorAyat.value = value['nomor_ayat'];
       surahFromStorage.value = value['surat'];
-      debugPrint('assda $value');
     });
   }
 
@@ -122,7 +121,6 @@ class SuratController extends GetxController {
     once(
       ayatList,
       (callback) async {
-        debugPrint('assda $callback');
         await Future.delayed(Duration(milliseconds: 500));
         scrollAyatToIndex();
       },
