@@ -45,9 +45,9 @@ class SuratController extends GetxController {
     );
 
     Get.snackbar(
-      'Surat ditambahkan',
-      'Surat yang terakhir dibaca telah ditambahkan',
-      backgroundColor: ColorPallete.QuranBlue.withOpacity(0.7),
+      '${selectedSurah.value.namaLatin}',
+      '${selectedSurah.value.namaLatin} ayat ke-${nomorAyat} dijadikan bacaan terakhir',
+      backgroundColor: ColorPallete.QuranBlue.withOpacity(0.5),
       colorText: Colors.white,
     );
   }
